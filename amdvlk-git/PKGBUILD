@@ -21,7 +21,7 @@ fi
 
 pkgname=amdvlk-git
 pkgdesc="AMD's standalone Vulkan driver (dev branch) (64 bit) (git release)"
-pkgver=2021.Q1.4
+pkgver=2021.Q2.1
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/GPUOpen-Drivers"
@@ -44,7 +44,7 @@ prepare(){
 
 pkgver() {
   cd ${srcdir}/vulkandriver/drivers/AMDVLK
-  echo 2021.Q1.4.$(date -I | sed 's/-/_/' | sed 's/-/_/').$(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+  echo 2021.Q2.1.$(date -I | sed 's/-/_/' | sed 's/-/_/').$(git rev-list --count HEAD).$(git rev-parse --short HEAD)
 }
 
 build(){
