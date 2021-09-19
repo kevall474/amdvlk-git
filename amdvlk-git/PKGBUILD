@@ -27,7 +27,7 @@ arch=('x86_64')
 url="https://github.com/GPUOpen-Drivers"
 license=('MIT')
 makedepends=('perl-xml-xpath' 'python' 'wayland' 'libxrandr' 'xorg-server-devel' 'cmake' 'ninja' 'git' 'python2' 'repo')
-conflicts=('amdvlk' 'amdvlk-master-git' 'amdvlk-dev-git')
+conflicts=('amdvlk')
 provides=('vulkan-driver' 'amdvlk')
 
 prepare(){
@@ -76,6 +76,7 @@ fi
 
   ninja -C builds/Release64
   ninja -C builds/Release64 spvgen
+}
 
 package_amdvlk-git(){
   install -m755 -d "${pkgdir}"/usr/lib
