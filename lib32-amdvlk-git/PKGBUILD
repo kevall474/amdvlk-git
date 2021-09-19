@@ -21,15 +21,13 @@ fi
 
 pkgname=lib32-amdvlk-git
 pkgdesc="AMD's standalone Vulkan driver (dev branch) (32 bit) (git release)"
-pkgname=("$pkgbase")
 pkgver=2021.Q2.1
 pkgrel=1
 arch=('i686' 'x86_64')
 url="https://github.com/GPUOpen-Drivers"
 license=('MIT')
-makedepends=('perl-xml-xpath' 'python' 'wayland' 'libxrandr' 'xorg-server-devel' 'cmake' 'ninja' 'git' 'python2' 'repo'
-             'lib32-wayland' 'lib32-libxrandr')
-conflicts=('lib32-amdvlk' 'lib32-amdvlk-master-git' 'lib32-amdvlk-dev-git')
+makedepends=('perl-xml-xpath' 'python' 'xorg-server-devel' 'cmake' 'ninja' 'git' 'python2' 'repo' 'lib32-wayland' 'lib32-libxrandr')
+conflicts=('lib32-amdvlk')
 provides=('vulkan-driver' 'lib32-amdvlk')
 
 prepare(){
@@ -80,17 +78,19 @@ export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
   -DBUILD_WAYLAND_SUPPORT=On
 
   ninja -C builds/Release32
-fi
 }
 
 package_lib32-amdvlk-git(){
   install -m755 -d "${pkgdir}"/usr/lib32
   install -m755 -d "${pkgdir}"/usr/share/vulkan/icd.d
+  install -m755 -d "${pkgdir}"/usr/share/vulkan/implicit_layer.d
   install -m755 -d "${pkgdir}"/usr/share/licenses/${pkgname}
 
   install ${srcdir}/vulkandriver/drivers/xgl/builds/Release32/icd/amdvlk32.so "${pkgdir}"/usr/lib32/
   install ${srcdir}/vulkandriver/drivers/AMDVLK/json/Redhat/amd_icd32.json "${pkgdir}"/usr/share/vulkan/icd.d/
+  install ${srcdir}/vulkandriver/drivers/AMDVLK/json/Redhat/amd_icd32.json "${pkgdir}"/usr/share/vulkan/implicit_layer.d/
   install ${srcdir}/vulkandriver/drivers/AMDVLK/LICENSE.txt "${pkgdir}"/usr/share/licenses/${pkgname}/
 
-  sed -i "s#/lib32#/lib#g" "${pkgdir}"/usr/share/vulkan/icd.d/amd_icd32.json
+  sed -i "s/\/lib/\lib32/g" "${pkgdir}"/usr/share/vulkan/icd.d/amd_icd32.json
+  sed -i "s/\/lib/\lib32/g" "${pkgdir}"/usr/share/vulkan/implicit_layer.d/amd_icd32.json
 }
